@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- PERFIL PERSONAL -->
+  <div class="profile-header">
+    <img src="https://i.pravatar.cc/300?img=12" alt="Mi foto" class="profile-pic" />
+    <h2>Juan Camilo Ramírez</h2>
+    <p class="email">juancamilo@example.com</p>
+    <ion-button expand="block" fill="outline" color="medium">
+      <ion-icon name="create-outline"></ion-icon> Editar Perfil
+    </ion-button>
+  </div>
+
+  <!-- MIS FAVORITOS -->
+  <ion-card class="favorites-card">
+    <ion-card-header>
+      <ion-card-title color="danger">
+        <ion-icon name="heart"></ion-icon> Mis Tatuadores Favoritos
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="favoritos.length > 0; else sinFavoritos">
+        <ion-item *ngFor="let tat of favoritos" [routerLink]="['/tatuador-detail', tat.id]">
+          <ion-avatar slot="start">
+            <img [src]="tat.foto" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ tat.nombre }}</h2>
+            <p>{{ tat.ciudad }} • {{ tat.estilo }}</p>
+            <p class="precio">Desde {{ tat.precio }}</p>
+          </ion-label>
+          <ion-badge color="danger" slot="end">
+            <ion-icon name="heart"></ion-icon>
+          </ion-badge>
+        </ion-item>
+      </ion-list>
+
+      <ng-template #sinFavoritos>
+        <div text-center class="empty-state">
+          <ion-icon name="heart-outline" size="large" color="medium"></ion-icon>
+          <p>Aún no tienes favoritos</p>
+          <ion-button fill="clear" routerLink="/tabs/home">
+            Explorar tatuadores
+          </ion-button>
+        </div>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- MIS CITAS (VISUAL SOLO) -->
+  <ion-card class="citas-card">
+    <ion-card-header>
+      <ion-card-title color="success">
+        <ion-icon name="calendar"></ion-icon> Mis Citas
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="empty-state">
+        <ion-icon name="calendar-outline" size="large" color="medium"></ion-icon>
+        <p>No tienes citas programadas</p>
+        <ion-button fill="clear" routerLink="/tabs/home">
+          Agendar mi primer tatuaje
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

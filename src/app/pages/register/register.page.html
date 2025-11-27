@@ -1,0 +1,31 @@
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <h1>Crear Cuenta</h1>
+    <p>Únete a la comunidad de InkColombia</p>
+
+    <form (ngSubmit)="register()">
+      <ion-item>
+        <ion-label position="floating">Nombre completo</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" class="register-btn">
+        Registrarse
+      </ion-button>
+    </form>
+
+    <p class="login-link">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</ion-content>

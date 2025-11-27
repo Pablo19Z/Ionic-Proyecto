@@ -1,0 +1,26 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <h1>InkColombia</h1>
+    <p>Encuentra al mejor tatuador cerca de ti</p>
+
+    <form (ngSubmit)="login()">
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" class="login-btn">
+        Ingresar
+      </ion-button>
+    </form>
+
+    <p class="register-link">
+      ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+    </p>
+  </div>
+</ion-content>

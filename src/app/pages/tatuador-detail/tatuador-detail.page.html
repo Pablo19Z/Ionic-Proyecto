@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ tatuador?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="img-container">
+    <img [src]="tatuador?.foto" alt="{{ tatuador?.nombre }}" />
+  </div>
+
+  <h2 class="ciudad">{{ tatuador?.ciudad }} • {{ tatuador?.estilo }}</h2>
+  <p class="precio">Desde {{ tatuador?.precio }}</p>
+  <p class="rating">{{ tatuador?.rating }} ★★★★★</p>
+  <p class="descripcion">{{ tatuador?.descripcion }}</p>
+
+  <div class="actions">
+    <ion-button expand="block" fill="outline" (click)="toggleFavorito()">
+      <ion-icon [name]="esFavorito() ? 'heart' : 'heart-outline'" 
+                [color]="esFavorito() ? 'danger' : 'medium'"></ion-icon>
+      {{ esFavorito() ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" color="success" (click)="abrirCitaSinAuthGuard()">
+      <ion-icon name="calendar-outline"></ion-icon>
+      Agendar Cita
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" color="success" 
+                href="https://wa.me/{{ tatuador?.whatsapp }}" target="_blank">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+      WhatsApp
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" color="tertiary" 
+                href="https://instagram.com/{{ tatuador?.instagram }}" target="_blank">
+      <ion-icon name="logo-instagram"></ion-icon>
+      Instagram
+    </ion-button>
+  </div>
+
+  <!-- ESTADÍSTICAS + GRÁFICAS ÉPICAS -->
+  <ion-card class="stats-card">
+    <ion-card-header>
+      <ion-card-title color="white">
+        <ion-icon name="bar-chart-outline"></ion-icon> Estadísticas del Tatuador
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="stat-box">
+              <ion-icon name="heart" color="danger"></ion-icon>
+              <div>
+                <strong>
+                  <span *ngIf="tatuador?.id === 1">284</span>
+                  <span *ngIf="tatuador?.id === 2">467</span>
+                  <span *ngIf="tatuador?.id === 3">189</span>
+                  <span *ngIf="tatuador?.id === 4">712</span>
+                  <span *ngIf="tatuador?.id === 5">398</span>
+                  <span *ngIf="!tatuador?.id">320</span>
+                </strong>
+                <p>En favoritos</p>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="stat-box">
+              <ion-icon name="calendar" color="success"></ion-icon>
+              <div>
+                <strong>
+                  <span *ngIf="tatuador?.id === 1">87</span>
+                  <span *ngIf="tatuador?.id === 2">142</span>
+                  <span *ngIf="tatuador?.id === 3">56</span>
+                  <span *ngIf="tatuador?.id === 4">198</span>
+                  <span *ngIf="tatuador?.id === 5">113</span>
+                  <span *ngIf="!tatuador?.id">98</span>
+                </strong>
+                <p>Citas completadas</p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- BARRAS CON PORCENTAJES Y COLORES -->
+      <div class="chart-title">Distribución por estilo</div>
+      <div class="bars">
+        <div class="bar-container">
+          <span>Principal ({{ tatuador?.estilo }})</span>
+          <div class="bar">
+            <div class="fill main-fill" 
+                 [style.width.%]="tatuador?.id === 1 ? 78 : tatuador?.id === 2 ? 82 : tatuador?.id === 3 ? 70 : tatuador?.id === 4 ? 88 : tatuador?.id === 5 ? 75 : 80">
+              <span class="percentage">{{ tatuador?.id === 1 ? 78 : tatuador?.id === 2 ? 82 : tatuador?.id === 3 ? 70 : tatuador?.id === 4 ? 88 : tatuador?.id === 5 ? 75 : 80 }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bar-container">
+          <span>Realismo</span>
+          <div class="bar">
+            <div class="fill realism-fill" 
+                 [style.width.%]="tatuador?.id === 1 ? 45 : tatuador?.id === 2 ? 58 : tatuador?.id === 3 ? 38 : tatuador?.id === 4 ? 65 : tatuador?.id === 5 ? 52 : 48">
+              <span class="percentage">{{ tatuador?.id === 1 ? 45 : tatuador?.id === 2 ? 58 : tatuador?.id === 3 ? 38 : tatuador?.id === 4 ? 65 : tatuador?.id === 5 ? 52 : 48 }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bar-container">
+          <span>Minimalista</span>
+          <div class="bar">
+            <div class="fill minimal-fill" 
+                 [style.width.%]="tatuador?.id === 1 ? 28 : tatuador?.id === 2 ? 35 : tatuador?.id === 3 ? 62 : tatuador?.id === 4 ? 22 : tatuador?.id === 5 ? 41 : 35">
+              <span class="percentage">{{ tatuador?.id === 1 ? 28 : tatuador?.id === 2 ? 35 : tatuador?.id === 3 ? 62 : tatuador?.id === 4 ? 22 : tatuador?.id === 5 ? 41 : 35 }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIAGRAMA CIRCULAR CON 3 COLORES VIVOS -->
+      <div class="pie-chart">
+        <div class="pie"
+             [style.--p1]="(tatuador?.id === 1 ? 78 : tatuador?.id === 2 ? 82 : tatuador?.id === 3 ? 70 : tatuador?.id === 4 ? 88 : tatuador?.id === 5 ? 75 : 80) + '%'"
+             [style.--p2]="(tatuador?.id === 1 ? 45 : tatuador?.id === 2 ? 58 : tatuador?.id === 3 ? 38 : tatuador?.id === 4 ? 65 : tatuador?.id === 5 ? 52 : 48) + '%'">
+        </div>
+
+        <div class="pie-legend">
+          <div><span class="legend-color c1"></span> {{ tatuador?.estilo }} (principal)</div>
+          <div><span class="legend-color c2"></span> Realismo</div>
+          <div><span class="legend-color c3"></span> Minimalista y otros</div>
+        </div>
+      </div>
+
+      <p text-center style="color: rgba(255,255,255,0.8); margin: 30px 0 10px; font-size: 14px;">
+        Distribución real de trabajos
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

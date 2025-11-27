@@ -1,0 +1,37 @@
+.chart-card {
+  margin-top: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.25);
+}
+
+.bar-chart {
+  padding: 10px 0;
+}
+
+.bar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0;
+  font-weight: bold;
+  color: #444;
+}
+
+.bar {
+  height: 28px;
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  border-radius: 14px;
+  margin: 0 12px;
+  transition: width 1.5s ease-in-out;
+}
+
+.total {
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+}
+
+ion-card {
+  border-radius: 18px;
+  margin: 16px 0;
+}

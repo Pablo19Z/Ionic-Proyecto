@@ -1,0 +1,57 @@
+.img-container { text-align: center; margin: 20px 0; }
+.img-container img {
+  width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+  border: 6px solid #8b5cf6; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+}
+.ciudad { text-align: center; font-size: 20px; margin: 10px 0; font-weight: 600; }
+.precio { text-align: center; font-size: 26px; font-weight: bold; color: #8b5cf6; }
+.rating { text-align: center; font-size: 19px; color: #f59e0b; margin-bottom: 20px; }
+.descripcion { text-align: center; margin: 20px 0 30px; color: #444; line-height: 1.5; padding: 0 15px; }
+.actions { margin: 30px 0; display: flex; flex-direction: column; gap: 14px; padding: 0 20px; }
+
+/* ESTADÍSTICAS */
+.stats-card {
+  margin: 40px 15px 30px; border-radius: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white; box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5); overflow: hidden;
+}
+.stat-box { text-align: center; padding: 20px; background: rgba(255,255,255,0.15); border-radius: 18px; backdrop-filter: blur(10px); margin: 10px; }
+.stat-box ion-icon { font-size: 38px; margin-bottom: 10px; }
+.stat-box strong { font-size: 34px; display: block; margin-bottom: 5px; }
+.stat-box p { margin: 0; opacity: 0.9; font-size: 15px; }
+
+.chart-title { text-align: center; font-weight: bold; margin: 35px 0 20px; font-size: 18px; }
+
+/* BARRAS CON COLORES Y PORCENTAJE */
+.bars { padding: 0 20px; margin: 30px 0 40px; }
+.bar-container { display: flex; align-items: center; margin: 20px 0; color: white; font-weight: 600; }
+.bar-container span { width: 130px; font-size: 15px; }
+.bar { flex: 1; height: 44px; background: rgba(255,255,255,0.15); border-radius: 22px; overflow: hidden; position: relative; box-shadow: inset 0 4px 10px rgba(0,0,0,0.3); }
+.fill { height: 100%; border-radius: 22px; position: relative; transition: width 1.8s cubic-bezier(0.65, 0, 0.35, 1); display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; font-weight: bold; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+.main-fill    { background: linear-gradient(90deg, #ff6b6b, #ff8e8e); }
+.realism-fill { background: linear-gradient(90deg, #4ecdc4, #6be3db); }
+.minimal-fill { background: linear-gradient(90deg, #45b7d1, #6dd5ed); }
+.percentage { font-size: 16px; }
+
+/* DIAGRAMA CIRCULAR */
+.pie-chart { text-align: center; margin: 40px 0 30px; }
+.pie {
+  width: 200px; height: 200px; border-radius: 50%; display: inline-block;
+  background: conic-gradient(
+    #ff6b6b 0% var(--p1, 80%),
+    #4ecdc4 var(--p1) calc(var(--p1) + var(--p2, 50%)),
+    #45b7d1 calc(var(--p1) + var(--p2)) 100%
+  );
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  animation: grow 1.6s ease-out;
+  position: relative;
+}
+.pie::before {
+  content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 120px; height: 120px; background: #1a0033; border-radius: 50%; z-index: 1;
+}
+@keyframes grow { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.pie-legend { margin-top: 25px; font-size: 16px; line-height: 2; color: white; }
+.legend-color { display: inline-block; width: 20px; height: 20px; border-radius: 50%; margin-right: 12px; vertical-align: middle; }
+.c1 { background: #ff6b6b; } .c2 { background: #4ecdc4; } .c3 { background: #45b7d1; }

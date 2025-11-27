@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Estadísticas InkColombia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2 text-center style="margin-top: 20px; color: #8b5cf6; font-weight: bold;">
+    <ion-icon name="trending-up-outline"></ion-icon> Top 5 Tatuadores
+  </h2>
+
+  <!-- TOP TATUADORES -->
+  <ion-card *ngFor="let top of topTatuadores; let i = index">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="top.foto" alt="{{top.nombre}}" />
+      </ion-avatar>
+      <ion-label>
+        <h2>#{{i + 1}} {{top.nombre}}</h2>
+        <p>{{top.ciudad}} • {{top.estilo}}</p>
+        <p><strong>{{top.citas}} citas</strong> • {{top.rating}} ★</p>
+      </ion-label>
+      <ion-badge color="success" slot="end">{{top.citas}}</ion-badge>
+    </ion-item>
+  </ion-card>
+
+  <!-- GRÁFICA DE CITAS POR CIUDAD -->
+  <ion-card class="chart-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="location-outline"></ion-icon> Citas por Ciudad
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="bar-chart">
+        <div class="bar-item">
+          <span>Bogotá</span>
+          <div class="bar" [style.width.%]="85"></div>
+          <strong>85%</strong>
+        </div>
+        <div class="bar-item">
+          <span>Medellín</span>
+          <div class="bar" [style.width.%]="68"></div>
+          <strong>68%</strong>
+        </div>
+        <div class="bar-item">
+          <span>Cali</span>
+          <div class="bar" [style.width.%]="52"></div>
+          <strong>52%</strong>
+        </div>
+        <div class="bar-item">
+          <span>Barranquilla</span>
+          <div class="bar" [style.width.%]="41"></div>
+          <strong>41%</strong>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- TOTAL DE CITAS -->
+  <ion-card color="success">
+    <ion-card-header>
+      <ion-card-title text-center>
+        <ion-icon name="flame-outline"></ion-icon> Total Citas Agendadas
+      </ion-card-title>
+      <ion-card-subtitle text-center class="total">{{totalCitas}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+</ion-content>

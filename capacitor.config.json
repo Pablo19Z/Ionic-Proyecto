@@ -1,0 +1,6 @@
+{
+  "appId": "com.inkcolombia.app",
+  "appName": "InkColombia",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

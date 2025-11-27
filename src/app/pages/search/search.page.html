@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Buscar Tatuadores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar [(ngModel)]="filtro" (ionInput)="filtrar()" placeholder="Ciudad, estilo o nombre..."></ion-searchbar>
+
+  <ion-list>
+    <ion-item button *ngFor="let t of tatuadoresFiltrados" routerLink="/tatuador/{{t.id}}">
+      <ion-thumbnail slot="start">
+        <img [src]="t.foto" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ t.nombre }}</h2>
+        <p>{{ t.ciudad }} • {{ t.estilo }}</p>
+        <p>Desde {{ t.precio }}</p>
+      </ion-label>
+      <ion-badge slot="end" color="success">{{ t.rating }} ★</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
