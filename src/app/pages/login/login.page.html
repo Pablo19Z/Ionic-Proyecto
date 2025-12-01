@@ -1,26 +1,36 @@
 <ion-content class="ion-padding">
   <div class="login-container">
     <h1>InkColombia</h1>
-    <p>Encuentra al mejor tatuador cerca de ti</p>
+    <p class="subtitle">Ingresa a tu cuenta</p>
 
     <form (ngSubmit)="login()">
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+        <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item class="ion-margin-top">
         <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+        <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
       </ion-item>
 
-      <ion-button expand="block" type="submit" class="login-btn">
-        Ingresar
+      <ion-button expand="block" type="submit" color="primary" class="login-btn">
+        Iniciar Sesión
       </ion-button>
     </form>
 
-    <p class="register-link">
-      ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
-    </p>
+    <!-- MENSAJE DE ERROR -->
+    <div class="error-msg" *ngIf="error">
+      <ion-text color="danger">
+        <p>{{ error }}</p>
+      </ion-text>
+    </div>
+
+    <!-- ENLACE QUE NUNCA FALLA -->
+    <div class="ion-text-center ion-margin-top">
+      <ion-button fill="clear" size="large" routerLink="/register">
+        <strong>¿No tienes cuenta? Regístrate aquí</strong>
+      </ion-button>
+    </div>
   </div>
 </ion-content>

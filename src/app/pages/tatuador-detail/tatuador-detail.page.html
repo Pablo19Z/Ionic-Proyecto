@@ -28,6 +28,16 @@
       <ion-icon name="calendar-outline"></ion-icon>
       Agendar Cita
     </ion-button>
+    <!-- NUEVO BOTÓN ÉPICO: MIS CITAS CON ESTE TATUADOR -->
+<ion-button 
+  expand="block" 
+  fill="outline" 
+  color="warning" 
+  (click)="verMisCitas()"
+  *ngIf="misCitasConEsteTatuador.length > 0">
+  <ion-icon name="calendar-check-outline"></ion-icon>
+  Mis citas con {{ tatuador?.nombre }} ({{ misCitasConEsteTatuador.length }})
+</ion-button>
 
     <ion-button expand="block" fill="outline" color="success" 
                 href="https://wa.me/{{ tatuador?.whatsapp }}" target="_blank">

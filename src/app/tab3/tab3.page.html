@@ -5,67 +5,151 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- PERFIL PERSONAL -->
+
+  <!-- FOTO + NOMBRE + CORREO + BOTÓN CERRAR SESIÓN -->
   <div class="profile-header">
-    <img src="https://i.pravatar.cc/300?img=12" alt="Mi foto" class="profile-pic" />
-    <h2>Juan Camilo Ramírez</h2>
-    <p class="email">juancamilo@example.com</p>
-    <ion-button expand="block" fill="outline" color="medium">
-      <ion-icon name="create-outline"></ion-icon> Editar Perfil
+    <div class="avatar-container">
+      <img src="https://i.pravatar.cc/300?img=12" class="profile-pic" alt="Foto de perfil" />
+      <div class="avatar-border"></div>
+    </div>
+
+    <h2>{{ currentUser?.nombre || 'Usuario' }}</h2>
+    <p class="email">{{ currentUser?.email || 'Sin correo registrado' }}</p>
+
+    <ion-button expand="block" color="danger" class="logout-btn" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      Cerrar Sesión
     </ion-button>
   </div>
 
   <!-- MIS FAVORITOS -->
-  <ion-card class="favorites-card">
+  <ion-card class="section-card">
     <ion-card-header>
       <ion-card-title color="danger">
-        <ion-icon name="heart"></ion-icon> Mis Tatuadores Favoritos
+        <ion-icon name="heart"></ion-icon> Mis Favoritos ({{ favoritos.length }})
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list *ngIf="favoritos.length > 0; else sinFavoritos">
-        <ion-item *ngFor="let tat of favoritos" [routerLink]="['/tatuador-detail', tat.id]">
+        <ion-item *ngFor="let tat of favoritos; let i = index">
           <ion-avatar slot="start">
-            <img [src]="tat.foto" />
+            <img [src]="tat.foto" alt="{{ tat.nombre }}" />
           </ion-avatar>
-          <ion-label>
+          <ion-label class="ion-text-wrap">
             <h2>{{ tat.nombre }}</h2>
             <p>{{ tat.ciudad }} • {{ tat.estilo }}</p>
             <p class="precio">Desde {{ tat.precio }}</p>
           </ion-label>
-          <ion-badge color="danger" slot="end">
-            <ion-icon name="heart"></ion-icon>
-          </ion-badge>
+
+          <ion-button 
+            slot="end" 
+            fill="clear" 
+            color="danger" 
+            size="large"
+            (click)="quitarFavorito(i)">
+            <ion-icon name="heart-dislike" slot="icon-only"></ion-icon>
+          </ion-button>
         </ion-item>
       </ion-list>
 
       <ng-template #sinFavoritos>
-        <div text-center class="empty-state">
+        <div class="empty-state">
           <ion-icon name="heart-outline" size="large" color="medium"></ion-icon>
-          <p>Aún no tienes favoritos</p>
-          <ion-button fill="clear" routerLink="/tabs/home">
-            Explorar tatuadores
+          <p>No tienes tatuadores favoritos</p>
+        </div>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- MIS CITAS - AHORA CON BOTONES GRANDES Y VISIBLES -->
+  <ion-card class="section-card">
+    <ion-card-header>
+      <ion-card-title color="success">
+        <ion-icon name="calendar"></ion-icon> Mis Citas ({{ citas.length }})
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngIf="citas.length > 0; else sinCitas">
+        <ion-item *ngFor="let c of citas; let i = index">
+          <ion-avatar slot="start">
+            <img [src]="c.tatuador.foto" alt="{{ c.tatuador.nombre }}" />
+          </ion-avatar>
+          <ion-label class="ion-text-wrap">
+            <h2>{{ c.tatuador.nombre }}</h2>
+            <p><strong>Fecha:</strong> {{ c.fecha }} • {{ c.hora }}</p>
+            <p><strong>Idea:</strong> {{ c.descripcion }}</p>
+            <ion-badge color="warning">Pendiente</ion-badge>
+          </ion-label>
+
+          <!-- BOTONES GRANDES Y VISIBLES (ÉPICOS) -->
+          <div slot="end" class="cita-buttons">
+            <ion-button fill="clear" color="primary" (click)="editarCita(i)" size="large">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color="danger" (click)="cancelarCita(i)" size="large">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <ng-template #sinCitas>
+        <div class="empty-state">
+          <ion-icon name="calendar-outline" size="large" color="medium"></ion-icon>
+          <p>No tienes citas programadas</p>
+          <ion-button expand="block" fill="outline" routerLink="/tabs/home">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            Agendar una cita
           </ion-button>
         </div>
       </ng-template>
     </ion-card-content>
   </ion-card>
 
-  <!-- MIS CITAS (VISUAL SOLO) -->
-  <ion-card class="citas-card">
-    <ion-card-header>
-      <ion-card-title color="success">
-        <ion-icon name="calendar"></ion-icon> Mis Citas
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="empty-state">
-        <ion-icon name="calendar-outline" size="large" color="medium"></ion-icon>
-        <p>No tienes citas programadas</p>
-        <ion-button fill="clear" routerLink="/tabs/home">
-          Agendar mi primer tatuaje
+  <!-- MODAL PARA EDITAR CITA -->
+  <ion-modal #modalEditar [isOpen]="modalAbierto" (didDismiss)="modalAbierto = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Editar Cita</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="modalAbierto = false">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Fecha</ion-label>
+          <ion-datetime 
+            display-format="DD/MM/YYYY" 
+            picker-format="DD MMM YYYY"
+            [(ngModel)]="citaEditando.fecha">
+          </ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Hora</ion-label>
+          <ion-input type="time" [(ngModel)]="citaEditando.hora"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Descripción del tatuaje</ion-label>
+          <ion-textarea 
+            rows="5" 
+            [(ngModel)]="citaEditando.descripcion"
+            placeholder="Tamaño, zona del cuerpo, estilo...">
+          </ion-textarea>
+        </ion-item>
+
+        <ion-button expand="block" color="success" class="ion-margin-top" (click)="guardarEdicion()">
+          <ion-icon name="save-outline"></ion-icon>
+          Guardar Cambios
         </ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>
